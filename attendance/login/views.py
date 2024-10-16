@@ -8,6 +8,8 @@ from rest_framework.exceptions import APIException,AuthenticationFailed
 from rest_framework.permissions import AllowAny
 from .Authentication  import create_access_token,create_refresh_token,decode_refresh_token,decode_access_token
 
+
+
 class register_view(APIView):
     def post(self,request):
         serializer = Userserializer(data=request.data)
@@ -76,3 +78,23 @@ class logout_view(APIView):
 
         return response
         
+    
+class home_view(APIView):
+    def get(self, request):
+        auth_header = get_authorization_header(request).split() # get token from the autherization header
+        if auth_header and len(auth_header) == 2:
+            try:
+                token = auth_header[1].decode('utf-8')
+                id = decode_access_token(token)
+                user = User.objects.get(pk=id)
+            except Exception as e:
+                raise AuthenticationFailed(str(e))
+            
+            data = {
+                'messages' : 'welcome to home page!',
+                'user' : user.email
+
+            }
+
+            return Response(data)
+        return AuthenticationFailed('unauthorised')

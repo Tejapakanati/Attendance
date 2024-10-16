@@ -8,6 +8,8 @@ urlpatterns = [
     path('users/',user_view.as_view(),name = 'user_view'),
     path('refresh/',refresh_view.as_view(),name = 'refresh_view'),
     path('logout/',logout_view.as_view(),name = 'logout_view'),
+    path('home/',home_view.as_view(),name = 'home_view'),
+
 
 
 ]
