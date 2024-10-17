@@ -84,11 +84,12 @@ class home_view(APIView):
         auth_header = get_authorization_header(request).split() # get token from the autherization header
         if auth_header and len(auth_header) == 2:
             try:
-                token = auth_header[1].decode('utf-8')
-                id = decode_access_token(token)
-                user = User.objects.get(pk=id)
+                token = auth_header[1].decode('utf-8') #decode the token
+                id = decode_access_token(token) # Get the  ID from the decoded token
+                user = User.objects.get(pk=id)  # Fetch the user from the database
             except Exception as e:
-                raise AuthenticationFailed(str(e))
+                raise AuthenticationFailed(str(e)) #Raises a new AuthenticationFailed exception to inform the client about the authentication failure, 
+                                                   #using the original error message for context.
             
             data = {
                 'messages' : 'welcome to home page!',
@@ -97,4 +98,4 @@ class home_view(APIView):
             }
 
             return Response(data)
-        return AuthenticationFailed('unauthorised')
+        return AuthenticationFailed('unauthorised') # If the token is missing or incorrect, raise an error
