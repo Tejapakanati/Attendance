@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'login','rest_framework'
+    'login','rest_framework','corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'attendance.urls'
@@ -128,3 +129,7 @@ AUTH_USER_MODEL = 'login.User'
 STATICFIELS_DIRS = [
     os.path.join(BASE_DIR , 'frontend/build/static')
 ]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # The address where your React app is running
+]
+
